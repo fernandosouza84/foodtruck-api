@@ -1,12 +1,15 @@
-from bottle import Bottle, run
+from typing import Union
 
-app = Bottle()
+from fastapi import FastAPI
 
-
-@app.route('/')
-def start():
-    return "Welcome!!!"
+app = FastAPI()
 
 
-if __name__ == '__main__':
-    run(app, host='localhost', port=8080)
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: Union[str, None] = None):
+    return {"item_id": item_id, "q": q}
